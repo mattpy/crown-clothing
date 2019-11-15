@@ -1,13 +1,12 @@
 export const addItemToCart = (cartItems, cartItemToAdd) => {
-  const existingCartItem = cartItems.find(
-    cartItem => cartItem.id === cartItemToAdd.id
-  );
+  const existingCartItem = cartItems.find(cartItem => cartItem.id === cartItemToAdd.id);
 
   if (existingCartItem) {
+    console.log('made it here')
     return cartItems.map(cartItem =>
       cartItem.id === cartItemToAdd.id
         ? { ...cartItem, quantity: cartItem.quantity + 1 }
-        : { cartItem }
+        : cartItem
     );
   }
 
@@ -15,16 +14,17 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
 };
 
 export const removeItemFromCart = (cartItems, cartItemToRemove) => {
-  console.log('********************', cartItems);
-  const existingCartItem = cartItems.find(cartItem => cartItem.id === cartItemToRemove.id);
+  const existingCartItem = cartItems.find(
+    cartItem => cartItem.id === cartItemToRemove.id
+  );
 
   if (existingCartItem.quantity === 1) {
     return cartItems.filter(item => item.id !== cartItemToRemove.id);
   }
 
-  return cartItems.map(cartItem => (
-    cartItem.id === cartItemToRemove.id ?
-    { ...cartItem, quantity: cartItem.quantity - 1 }
-    : cartItem
-  ));
+  return cartItems.map(cartItem =>
+    cartItem.id === cartItemToRemove.id
+      ? { ...cartItem, quantity: cartItem.quantity - 1 }
+      : cartItem
+  );
 };
